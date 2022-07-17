@@ -1,0 +1,13 @@
+debug: true
+host_address: :9000
+grpc_address: :4001
+auth_address: auth:4000
+sentry_dsn: https://c0374926d8324d0bbf72279e921f3935@sentry.k8s.golang-mts-teta.ru/32
+jaeger_collector: http://jaeger-instance-collector.observability:14268/api/traces
+db:
+  user: test
+  password: test
+  host: 20.91.217.80
+  port: 5432
+  name: analytics
+  ssl: disable
