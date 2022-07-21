@@ -1,0 +1,73 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Project Analytics by Team41",
+        "title": "Analytics API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:9000",
+    "basePath": "/analytics",
+    "paths": {
+        "/analytics/count-accepted": {
+            "get": {
+                "description": "Get count accepted task",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get count accepted task",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/analytics/count-declined": {
+            "get": {
+                "description": "Get count declined task",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get count declined task",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/analytics/sum-reaction": {
+            "get": {
+                "description": "Get summary time of Reaction",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get summary time of Reaction",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    }
+}

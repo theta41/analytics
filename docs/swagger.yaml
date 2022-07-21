@@ -1,0 +1,48 @@
+basePath: /analytics
+host: localhost:9000
+info:
+  contact: {}
+  description: Project Analytics by Team41
+  title: Analytics API
+  version: "1.0"
+paths:
+  /analytics/count-accepted:
+    get:
+      description: Get count accepted task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "500":
+          description: ""
+      summary: Get count accepted task
+  /analytics/count-declined:
+    get:
+      description: Get count declined task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "500":
+          description: ""
+      summary: Get count declined task
+  /analytics/sum-reaction:
+    get:
+      description: Get summary time of Reaction
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "500":
+          description: ""
+      summary: Get summary time of Reaction
+swagger: "2.0"

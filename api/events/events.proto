@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+//
+// build from project root:
+//   protoc --go_out=. --go-grpc_out=. api/events/events.proto
+//
+
+option go_package = "api/events";
+
+service AnalyticsService {
+    rpc CreateTask (TaskRequest) returns (TaskResponse);
+    rpc FinishTask (TaskRequest) returns (TaskResponse);
+    rpc CreateLetter (LetterRequest) returns (LetterResponse);
+    rpc AcceptedLetter (LetterRequest) returns (LetterResponse);
+    rpc DeclinedLetter (LetterRequest) returns (LetterResponse);
+}
+
+message TaskRequest {
+    uint32 object_id = 1;
+}
+
+message TaskResponse {
+    bool success = 1;
+}
+
+message LetterRequest {
+    uint32 object_id = 1;
+    string email = 2;
+}
+
+message LetterResponse {
+    bool success = 1;
+}
