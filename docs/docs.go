@@ -25,13 +25,13 @@ const docTemplate = `{
                 "summary": "Get count accepted task",
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "OK"
                     },
                     "400": {
-                        "description": ""
+                        "description": "Bad Request"
                     },
                     "500": {
-                        "description": ""
+                        "description": "Internal Server Error"
                     }
                 }
             }
@@ -45,13 +45,13 @@ const docTemplate = `{
                 "summary": "Get count declined task",
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "OK"
                     },
                     "400": {
-                        "description": ""
+                        "description": "Bad Request"
                     },
                     "500": {
-                        "description": ""
+                        "description": "Internal Server Error"
                     }
                 }
             }
@@ -65,13 +65,13 @@ const docTemplate = `{
                 "summary": "Get summary time of Reaction",
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "OK"
                     },
                     "400": {
-                        "description": ""
+                        "description": "Bad Request"
                     },
                     "500": {
-                        "description": ""
+                        "description": "Internal Server Error"
                     }
                 }
             }

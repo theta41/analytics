@@ -18,7 +18,7 @@ const (
 func mustCookie(r *http.Request, name string) string {
 	v, err := r.Cookie(name)
 	if err != nil || v == nil {
-		logrus.Error("missing cookie %s", name)
+		logrus.Errorf("missing cookie %s", name)
 		return ""
 	}
 
