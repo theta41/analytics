@@ -13,11 +13,11 @@ paths:
       - application/json
       responses:
         "200":
-          description: ""
+          description: OK
         "400":
-          description: ""
+          description: Bad Request
         "500":
-          description: ""
+          description: Internal Server Error
       summary: Get count accepted task
   /analytics/count-declined:
     get:
@@ -26,11 +26,11 @@ paths:
       - application/json
       responses:
         "200":
-          description: ""
+          description: OK
         "400":
-          description: ""
+          description: Bad Request
         "500":
-          description: ""
+          description: Internal Server Error
       summary: Get count declined task
   /analytics/sum-reaction:
     get:
@@ -39,10 +39,10 @@ paths:
       - application/json
       responses:
         "200":
-          description: ""
+          description: OK
         "400":
-          description: ""
+          description: Bad Request
         "500":
-          description: ""
+          description: Internal Server Error
       summary: Get summary time of Reaction
 swagger: "2.0"
