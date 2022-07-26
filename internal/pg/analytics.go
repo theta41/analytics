@@ -98,7 +98,7 @@ func (a Analytics) GetSumReaction(objectId uint32) (sum int, err error) {
 	if err != nil || taskId == 0 {
 		return
 	}
-	err = a.db.QueryRow("SELECT SUM(finished_at-sent_at) FROM letters_events l WHERE is_accepted = TRUE AND task_id = $1", taskId).
+	err = a.db.QueryRow("SELECT COALESCE(SUM(finished_at-sent_at), 0) FROM letters_events l WHERE is_accepted = TRUE AND task_id = $1", taskId).
 		Scan(&sum)
 	return
 }
