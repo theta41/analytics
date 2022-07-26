@@ -5,6 +5,7 @@ type Analytics interface {
 	GetCountDeclinedTask() (count int, err error)
 	GetSumReaction(objectId uint32) (count int, err error)
 	CreateTask(objectId uint32) (taskId int, err error)
+	DeleteTask(objectId uint32) (err error)
 	FinishTask(objectId uint32) (err error)
 	CreateLetter(objectId uint32, email string) (letterId int, err error)
 	AcceptedLetter(objectId uint32, email string) error
