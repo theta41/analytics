@@ -1,6 +1,8 @@
 package statistics
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 
 	"gitlab.com/g6834/team41/analytics/internal/repositories"
@@ -19,7 +21,7 @@ func New(db repositories.Analytics) *Service {
 func (s *Service) GetCountAcceptedTask() (count int, err error) {
 	count, err = s.db.GetCountAcceptedTask()
 	if err != nil {
-		return 0, fmt.Errorf("Failed to get count accepted: %w", err)
+		return 0, fmt.Errorf("failed to get count accepted: %w", err)
 	}
 	return
 }
@@ -27,7 +29,7 @@ func (s *Service) GetCountAcceptedTask() (count int, err error) {
 func (s *Service) GetCountDeclinedTask() (count int, err error) {
 	count, err = s.db.GetCountDeclinedTask()
 	if err != nil {
-		return 0, fmt.Errorf("Failed to get count declined: %w", err)
+		return 0, fmt.Errorf("failed to get count declined: %w", err)
 	}
 	return
 }
@@ -35,7 +37,10 @@ func (s *Service) GetCountDeclinedTask() (count int, err error) {
 func (s *Service) GetSumReaction(objectId uint32) (count int, err error) {
 	count, err = s.db.GetSumReaction(objectId)
 	if err != nil {
-		return 0, fmt.Errorf("Failed to get count declined: %w", err)
+		if errors.Is(err, sql.ErrNoRows) {
+			return 0, nil
+		}
+		return 0, fmt.Errorf("failed to get count declined: %w", err)
 	}
 	return
 }

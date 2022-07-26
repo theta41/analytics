@@ -12,7 +12,6 @@ import (
 	grpc "gitlab.com/g6834/team41/analytics/internal/grpc"
 	"gitlab.com/g6834/team41/analytics/internal/pg"
 	"gitlab.com/g6834/team41/analytics/internal/ports"
-	"gitlab.com/g6834/team41/analytics/internal/repositories"
 
 	"gitlab.com/g6834/team41/analytics/internal/env"
 
@@ -23,8 +22,8 @@ import (
 )
 
 type App struct {
-	m          *chi.Mux
-	repo       repositories.Analytics
+	m *chi.Mux
+	//repo       repositories.Analytics
 	Auth       ports.AuthService
 	Statistics ports.Statistics
 	Events     ports.Events

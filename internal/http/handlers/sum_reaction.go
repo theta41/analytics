@@ -29,9 +29,13 @@ type SumReaction struct {
 // @Router /analytics/sum-reaction [get]
 func (i SumReaction) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	log := logrus.WithField("RAPI", "/analytics/sum-reaction")
+
 	var err error
 	var req SumReactionRequest
 	if err = json.NewDecoder(r.Body).Decode(&req); err != nil {
+		log.Error("error parse body request: ", err)
 		http.Error(w, "{}", http.StatusBadRequest)
 		return
 	}
@@ -39,20 +43,20 @@ func (i SumReaction) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var response SumReactionResponse
 	response.Sum, err = i.Statistics.GetSumReaction(req.ObjectID)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error Statistics.GetSumReaction: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
 	resp, err := json.Marshal(response)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error marshal response: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
 	_, err = w.Write(resp)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error write response: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}

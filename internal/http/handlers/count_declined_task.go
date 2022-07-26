@@ -25,24 +25,27 @@ type CountDeclinedTask struct {
 // @Router /analytics/count-declined [get]
 func (i CountDeclinedTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	log := logrus.WithField("RAPI", "/analytics/count-declined")
+
 	var response DeclinedResponse
 	var err error
 	response.Count, err = i.Statistics.GetCountDeclinedTask()
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error Statistics.GetCountDeclinedTask: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
 	resp, err := json.Marshal(response)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error marshal response: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
 	_, err = w.Write(resp)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error write response: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
