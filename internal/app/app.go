@@ -16,6 +16,7 @@ import (
 	"gitlab.com/g6834/team41/analytics/internal/env"
 
 	"gitlab.com/g6834/team41/analytics/internal/http/handlers"
+	"gitlab.com/g6834/team41/analytics/internal/http/middlewares"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 	_ "gitlab.com/g6834/team41/analytics/docs"
@@ -67,7 +68,7 @@ const (
 func (a *App) bindHandlers() {
 
 	a.m.Route("/analytics", func(r chi.Router) {
-		//r.Use(middlewares.GetCheckAuthFunc(a.Auth))
+		r.Use(middlewares.GetCheckAuthFunc(a.Auth))
 
 		r.Handle(CountAccepted, handlers.CountAcceptedTask{Statistics: a.Statistics})
 		r.Handle(CountDeclined, handlers.CountDeclinedTask{Statistics: a.Statistics})
