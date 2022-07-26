@@ -1,2 +1,18 @@
 include:
   remote: 'https://gitlab.com/mts-teta-public/devops-tools/-/raw/master/.gitlab-ci-main.yml'
+
+newman tests:
+  variables:
+    POSTMAN_COLLECTIONS_ROOT: https://gitlab.com/ieezz/ci-scripts-public/-/raw/main/
+    COLLECTION_FOLDER: v1.0
+    TEST_COLLECTION: Analytics_API.postman_collection.json
+    ANALYTICS_RAPI: analytics:3000
+    AUTH_RAPI: auth:3000
+  script:
+  - newman --version
+  - echo "Инструкция https://gitlab.com/mts-teta-public/devops-tools/-/tree/master/#%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-newman"
+  - export COLLECTION_URL=${POSTMAN_COLLECTIONS_ROOT}${TEST_COLLECTION}
+  - echo "Postman collection url $COLLECTION_URL"
+  - wget $COLLECTION_URL
+  - newman run ${TEST_COLLECTION} --env-var authUrl=$AUTH_RAPI --env-var analyticsUrl=$ANALYTICS_RAPI
+    --folder ${COLLECTION_FOLDER} --reporters cli,junit --reporter-junit-export api-results.xml
