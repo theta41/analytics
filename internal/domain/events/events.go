@@ -19,7 +19,15 @@ func New(db repositories.Analytics) *Service {
 func (s *Service) CreateTask(objectId uint32) (taskId int, err error) {
 	taskId, err = s.db.CreateTask(objectId)
 	if err != nil {
-		return 0, fmt.Errorf("Failed to CreateTask: %w", err)
+		return 0, fmt.Errorf("failed to CreateTask: %w", err)
+	}
+	return
+}
+
+func (s *Service) DeleteTask(objectId uint32) (err error) {
+	err = s.db.DeleteTask(objectId)
+	if err != nil {
+		return fmt.Errorf("failed to DeleteTask: %w", err)
 	}
 	return
 }
@@ -27,7 +35,7 @@ func (s *Service) CreateTask(objectId uint32) (taskId int, err error) {
 func (s *Service) FinishTask(objectId uint32) (err error) {
 	err = s.db.FinishTask(objectId)
 	if err != nil {
-		return fmt.Errorf("Failed to FinishTask: %w", err)
+		return fmt.Errorf("failed to FinishTask: %w", err)
 	}
 	return
 }
@@ -35,7 +43,7 @@ func (s *Service) FinishTask(objectId uint32) (err error) {
 func (s *Service) CreateLetter(objectId uint32, email string) (letterId int, err error) {
 	letterId, err = s.db.CreateLetter(objectId, email)
 	if err != nil {
-		return 0, fmt.Errorf("Failed to CreateLetter: %w", err)
+		return 0, fmt.Errorf("failed to CreateLetter: %w", err)
 	}
 	return
 }
@@ -43,7 +51,7 @@ func (s *Service) CreateLetter(objectId uint32, email string) (letterId int, err
 func (s *Service) AcceptedLetter(objectId uint32, email string) (err error) {
 	err = s.db.AcceptedLetter(objectId, email)
 	if err != nil {
-		return fmt.Errorf("Failed to AcceptedLetter: %w", err)
+		return fmt.Errorf("failed to AcceptedLetter: %w", err)
 	}
 	return
 }
@@ -51,7 +59,7 @@ func (s *Service) AcceptedLetter(objectId uint32, email string) (err error) {
 func (s *Service) DeclinedLetter(objectId uint32, email string) (err error) {
 	err = s.db.DeclinedLetter(objectId, email)
 	if err != nil {
-		return fmt.Errorf("Failed to DeclinedLetter: %w", err)
+		return fmt.Errorf("failed to DeclinedLetter: %w", err)
 	}
 	return
 }

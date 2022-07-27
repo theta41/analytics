@@ -12,19 +12,19 @@ import (
 	grpc "gitlab.com/g6834/team41/analytics/internal/grpc"
 	"gitlab.com/g6834/team41/analytics/internal/pg"
 	"gitlab.com/g6834/team41/analytics/internal/ports"
-	"gitlab.com/g6834/team41/analytics/internal/repositories"
 
 	"gitlab.com/g6834/team41/analytics/internal/env"
 
 	"gitlab.com/g6834/team41/analytics/internal/http/handlers"
+	"gitlab.com/g6834/team41/analytics/internal/http/middlewares"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 	_ "gitlab.com/g6834/team41/analytics/docs"
 )
 
 type App struct {
-	m          *chi.Mux
-	repo       repositories.Analytics
+	m *chi.Mux
+	//repo       repositories.Analytics
 	Auth       ports.AuthService
 	Statistics ports.Statistics
 	Events     ports.Events
@@ -68,7 +68,7 @@ const (
 func (a *App) bindHandlers() {
 
 	a.m.Route("/analytics", func(r chi.Router) {
-		//r.Use(middlewares.GetCheckAuthFunc(a.Auth))
+		r.Use(middlewares.GetCheckAuthFunc(a.Auth))
 
 		r.Handle(CountAccepted, handlers.CountAcceptedTask{Statistics: a.Statistics})
 		r.Handle(CountDeclined, handlers.CountDeclinedTask{Statistics: a.Statistics})
