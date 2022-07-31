@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/pprof"
@@ -10,6 +11,7 @@ import (
 	"gitlab.com/g6834/team41/analytics/internal/domain/events"
 	"gitlab.com/g6834/team41/analytics/internal/domain/statistics"
 	grpc "gitlab.com/g6834/team41/analytics/internal/grpc"
+	mq "gitlab.com/g6834/team41/analytics/internal/kafka"
 	"gitlab.com/g6834/team41/analytics/internal/pg"
 	"gitlab.com/g6834/team41/analytics/internal/ports"
 
@@ -23,8 +25,7 @@ import (
 )
 
 type App struct {
-	m *chi.Mux
-	//repo       repositories.Analytics
+	m          *chi.Mux
 	Auth       ports.AuthService
 	Statistics ports.Statistics
 	Events     ports.Events
@@ -52,8 +53,17 @@ func (a *App) Run() error {
 	a.bindSwagger()
 	a.bindProfiler()
 
-	logrus.Info("Starting gRPC server...")
-	go grpc.StartServer(env.E.C.GrpcAddress, a.Events)
+	//logrus.Info("Starting gRPC server...")
+	//go grpc.StartServer(env.E.C.GrpcAddress, a.Events)
+
+	logrus.Info("Starting MQ Consumer...")
+	go mq.StartConsumer(
+		context.TODO(),
+		env.E.C.Kafka.Brokers,
+		env.E.C.Kafka.Topic,
+		env.E.C.Kafka.GroupId,
+		a.Events,
+	)
 
 	logrus.Info("Starting server...")
 	return http.ListenAndServe(env.E.C.HostAddress, a.m)
