@@ -55,22 +55,7 @@ func (s *businessTestSuite) getStatistics() (completed int, uncompleted int, sum
 
 func (s *businessTestSuite) TestCounters() {
 
-	var lastSumReaction int
-
-	s.Run("initial state", func() {
-		var completed, uncompleted, sumReaction int
-		expectedCompleted := 0
-		expectedUncompleted := 1
-		expectedSumReaction := 0
-
-		completed, uncompleted, sumReaction = s.getStatistics()
-
-		s.Assert().Equal(expectedCompleted, completed, "wrong 'completed'")
-		s.Assert().Equal(expectedUncompleted, uncompleted, "wrong 'uncompleted'")
-		s.Assert().Equal(expectedSumReaction, sumReaction, "wrong 'sumReaction'")
-
-		lastSumReaction = sumReaction
-	})
+	initialCompleted, initialUncompleted, lastSumReaction := s.getStatistics()
 
 	var err error
 
@@ -81,8 +66,8 @@ func (s *businessTestSuite) TestCounters() {
 
 	s.Run("after emailA clicks accepted", func() {
 		var completed, uncompleted, sumReaction int
-		expectedCompleted := 0
-		expectedUncompleted := 1
+		expectedCompleted := initialCompleted
+		expectedUncompleted := initialUncompleted
 
 		completed, uncompleted, sumReaction = s.getStatistics()
 
@@ -100,8 +85,8 @@ func (s *businessTestSuite) TestCounters() {
 
 	s.Run("after emailB clicks declined", func() {
 		var completed, uncompleted, sumReaction int
-		expectedCompleted := 0
-		expectedUncompleted := 1
+		expectedCompleted := initialCompleted
+		expectedUncompleted := initialUncompleted
 
 		completed, uncompleted, sumReaction = s.getStatistics()
 
@@ -119,8 +104,8 @@ func (s *businessTestSuite) TestCounters() {
 
 	s.Run("after task finished", func() {
 		var completed, uncompleted, sumReaction int
-		expectedCompleted := 1
-		expectedUncompleted := 0
+		expectedCompleted := initialCompleted + 1
+		expectedUncompleted := initialUncompleted - 1
 
 		completed, uncompleted, sumReaction = s.getStatistics()
 
