@@ -29,7 +29,7 @@ func (s *eventsTestSuite) Test_TaskErrors() {
 
 	var err error
 
-	_, err = s.app.Events.CreateTask(objectId)
+	err = s.app.Events.CreateTask(objectId)
 	s.Require().NoError(err, "CreateTask fail")
 
 	err = s.app.Events.FinishTask(objectId)
@@ -44,13 +44,13 @@ func (s *eventsTestSuite) Test_LetterErrors() {
 
 	var err error
 
-	_, err = s.app.Events.CreateLetter(objectId, emailA)
+	err = s.app.Events.CreateLetter(objectId, emailA)
 	s.Require().Error(err, "CreateLetter without task should fail")
 
-	_, err = s.app.Events.CreateTask(objectId)
+	err = s.app.Events.CreateTask(objectId)
 	s.Require().NoError(err, "CreateTask fail")
 
-	_, err = s.app.Events.CreateLetter(objectId, emailA)
+	err = s.app.Events.CreateLetter(objectId, emailA)
 	s.Assert().NoError(err, "fail CreateLetter emailA")
 
 	if err == nil {
@@ -58,7 +58,7 @@ func (s *eventsTestSuite) Test_LetterErrors() {
 		s.Assert().NoError(err, "fail AcceptedLetter emailA")
 	}
 
-	_, err = s.app.Events.CreateLetter(objectId, emailB)
+	err = s.app.Events.CreateLetter(objectId, emailB)
 	s.Assert().NoError(err, "fail CreateLetter emailB")
 
 	if err == nil {

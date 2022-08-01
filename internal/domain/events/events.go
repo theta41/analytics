@@ -16,50 +16,50 @@ func New(db repositories.Analytics) *Service {
 	}
 }
 
-func (s *Service) CreateTask(objectId uint32) (taskId int, err error) {
-	taskId, err = s.db.CreateTask(objectId)
+func (s *Service) CreateTask(objectId uint32) error {
+	err := s.db.CreateTask(objectId)
 	if err != nil {
-		return 0, fmt.Errorf("failed to CreateTask: %w", err)
+		return fmt.Errorf("failed to CreateTask: %w", err)
 	}
-	return
+	return nil
 }
 
-func (s *Service) DeleteTask(objectId uint32) (err error) {
-	err = s.db.DeleteTask(objectId)
+func (s *Service) DeleteTask(objectId uint32) error {
+	err := s.db.DeleteTask(objectId)
 	if err != nil {
 		return fmt.Errorf("failed to DeleteTask: %w", err)
 	}
-	return
+	return nil
 }
 
-func (s *Service) FinishTask(objectId uint32) (err error) {
-	err = s.db.FinishTask(objectId)
+func (s *Service) FinishTask(objectId uint32) error {
+	err := s.db.FinishTask(objectId)
 	if err != nil {
 		return fmt.Errorf("failed to FinishTask: %w", err)
 	}
-	return
+	return nil
 }
 
-func (s *Service) CreateLetter(objectId uint32, email string) (letterId int, err error) {
-	letterId, err = s.db.CreateLetter(objectId, email)
+func (s *Service) CreateLetter(objectId uint32, email string) error {
+	err := s.db.CreateLetter(objectId, email)
 	if err != nil {
-		return 0, fmt.Errorf("failed to CreateLetter: %w", err)
+		return fmt.Errorf("failed to CreateLetter: %w", err)
 	}
-	return
+	return nil
 }
 
-func (s *Service) AcceptedLetter(objectId uint32, email string) (err error) {
-	err = s.db.AcceptedLetter(objectId, email)
+func (s *Service) AcceptedLetter(objectId uint32, email string) error {
+	err := s.db.AcceptedLetter(objectId, email)
 	if err != nil {
 		return fmt.Errorf("failed to AcceptedLetter: %w", err)
 	}
-	return
+	return nil
 }
 
-func (s *Service) DeclinedLetter(objectId uint32, email string) (err error) {
-	err = s.db.DeclinedLetter(objectId, email)
+func (s *Service) DeclinedLetter(objectId uint32, email string) error {
+	err := s.db.DeclinedLetter(objectId, email)
 	if err != nil {
 		return fmt.Errorf("failed to DeclinedLetter: %w", err)
 	}
-	return
+	return nil
 }

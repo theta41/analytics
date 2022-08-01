@@ -11,3 +11,8 @@ db:
   port: 5432
   name: team41
   ssl: disable
+kafka:
+  brokers:
+    - 91.185.95.87:9094
+  topic: team41-tasks
+  group_id: team41-analytics-group-id
