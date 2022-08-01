@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"strconv"
 
 	"gitlab.com/g6834/team41/analytics/internal/ports"
 
@@ -14,20 +15,21 @@ import (
 
 const (
 	keyCreateTask    = "create-task"
-	keyFinishTask    = "finish-task"
+	keyFinishTask    = "finish"
+	keyDeleteTask    = "delete"
 	keyCreateLetter  = "create-letter"
 	keyAcceptLetter  = "accept"
 	keyDeclineLetter = "decline"
 )
 
 type mqCreateTask struct {
-	ObjectId uint32 `json:"object_id"`
+	ObjectId uint32 `json:"task_id"`
 }
 
 type mqFinishTask mqCreateTask
 
 type mqCreateLetter struct {
-	ObjectId uint32 `json:"object_id"`
+	ObjectId uint32 `json:"task_id"`
 	Email    string `json:"email"`
 }
 
@@ -70,6 +72,15 @@ func StartConsumer(ctx context.Context, brokers []string, topic, groupId string,
 			} else {
 				log.Info("got message: ", msg)
 				events.FinishTask(msg.ObjectId)
+			}
+
+		case keyDeleteTask:
+			objectId, err := strconv.Atoi(string(binValue))
+			if err != nil {
+				log.Error("strconv.Atoi error: ", err)
+			} else {
+				log.Info("got objectId: ", objectId)
+				events.DeleteTask(uint32(objectId))
 			}
 
 		case keyCreateLetter:
