@@ -23,13 +23,13 @@ func (s *businessTestSuite) SetupSuite() {
 }
 
 func (s *businessTestSuite) SetupTest() {
-	_, err := s.app.Events.CreateTask(objectId)
+	err := s.app.Events.CreateTask(objectId)
 	s.Require().NoError(err, "CreateTask fail")
 
-	_, err = s.app.Events.CreateLetter(objectId, emailA)
+	err = s.app.Events.CreateLetter(objectId, emailA)
 	s.Assert().NoError(err, "fail CreateLetter emailA")
 
-	_, err = s.app.Events.CreateLetter(objectId, emailB)
+	err = s.app.Events.CreateLetter(objectId, emailB)
 	s.Assert().NoError(err, "fail CreateLetter emailB")
 }
 

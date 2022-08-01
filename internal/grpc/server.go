@@ -37,7 +37,7 @@ type server struct {
 }
 
 func (s *server) CreateTask(ctx context.Context, in *pb.TaskRequest) (*pb.TaskResponse, error) {
-	_, err := s.events.CreateTask(in.ObjectId)
+	err := s.events.CreateTask(in.ObjectId)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "method CreateTask %v", err)
 	}
@@ -57,7 +57,7 @@ func (s *server) FinishTask(ctx context.Context, in *pb.TaskRequest) (*pb.TaskRe
 }
 
 func (s *server) CreateLetter(ctx context.Context, in *pb.LetterRequest) (*pb.LetterResponse, error) {
-	_, err := s.events.CreateLetter(in.ObjectId, in.Email)
+	err := s.events.CreateLetter(in.ObjectId, in.Email)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "method CreateLetter %v", err)
 	}
