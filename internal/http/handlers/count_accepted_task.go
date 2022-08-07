@@ -25,24 +25,27 @@ type CountAcceptedTask struct {
 // @Router /analytics/count-accepted [get]
 func (i CountAcceptedTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	log := logrus.WithField("RAPI", "/analytics/count-accepted")
+
 	var response AcceptedResponse
 	var err error
 	response.Count, err = i.Statistics.GetCountAcceptedTask()
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error Statistics.GetCountAcceptedTask: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
 	resp, err := json.Marshal(response)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error marshal response: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
 	_, err = w.Write(resp)
 	if err != nil {
-		logrus.Error(err)
+		log.Error("error write response: ", err)
 		http.Error(w, "{}", http.StatusInternalServerError)
 		return
 	}
